@@ -1,0 +1,12 @@
+name: steven_app
+title: steven_app
+username:
+account: victoryu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1967385
+bundleId: 2898940
+url: https://victoryu.shinyapps.io/steven_app/
+when: 1584641623.2566
+asMultiple: FALSE
+asStatic: FALSE
