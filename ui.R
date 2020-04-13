@@ -1,15 +1,5 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 
-# Define UI for application that draws a histogram
 shinyUI(
     
     
@@ -18,7 +8,7 @@ shinyUI(
     # Application title
     titlePanel("A simple tool to support commissioners to determine if a risk prediction tool might work and save money before deployment"),
 
-    # Sidebar with a slider input for number of bins
+    # Sidebar
     sidebarLayout(
         div(class="sidebar", sidebarPanel(
             strong("Cost of adverse event to be avoided (£)"),
@@ -36,7 +26,7 @@ shinyUI(
                                      max = 1000, step = 1))
         )),
 
-        # Show a plot of the generated distribution
+        # Show a plot
         mainPanel(
             plotOutput("myplot")
         )
