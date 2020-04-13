@@ -17,27 +17,7 @@ shinyServer(function(input, output) {
 
     output$myplot <- renderPlot({
         
-        nsims <- 1000
-        
-        
-        s_ppv <-
-            replicate(nsims, runif(1, input$ppv_lower / 100, input$ppv_upper / 100))
-        s_nnt <-
-            replicate(nsims, runif(1, input$nnt_lower, input$nnt_upper))
-        s_a <-
-            replicate(nsims, runif(1, input$cost_lower, input$cost_upper))
-        s_i <- (s_a * s_ppv) / s_nnt
-        
-        
-        df <- tibble(s_ppv = s_ppv, 
-                     s_nnt = s_nnt, 
-                     s_a = s_a, 
-                     s_i = s_i)
 
-    p10 <- round(round(quantile(df$s_i, 0.1), 2))
-    p50 <- round(round(quantile(df$s_i, 0.5), 2))
-    p90 <- round(round(quantile(df$s_i, 0.9), 2))
-    
     this_shiny_ggplot_function(nntlower = input$nnt_lower, 
                                nntupper = input$nnt_upper, 
                                ppvlower = input$ppv_lower, 
