@@ -77,13 +77,15 @@ shinyServer(function(input, output) {
             geom_histogram(aes(y=cumsum(..count..)), colour = "black", alpha = 0) +
             # stat_bin(aes(y=cumsum(..count..)),geom="line", color="red", size = 2) +
             labs(x = "Cost of Intervention (£)",
-                 y = "Cumulative Distribution From Iterations")
+                 y = "Cumulative Distribution From Iterations",
+                 title = "Cumulative Histogram")
         
         basichist <- 
             ggplot(df, aes(x=s_i)) +
             geom_histogram(colour = "black", alpha = 0) +
             labs(y = "Draws Count",
-                 x = "Cost of Intervention (£)")
+                 x = "Cost of Intervention (£)",
+                 title = "Histogram")
         
         pointplot / (basichist | cumhist )
         

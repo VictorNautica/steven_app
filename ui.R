@@ -25,7 +25,7 @@ shinyUI(
                         numericInput("nnt_upper", "Upper Limit", value = 20, min = 0,
                                      max = 1000, step = 1)),
             tags$br(),
-            "This app allows you to model different worked examples based on the design-stage evaluation framework in the paper.",
+            "This app allows you to model scenarios based on the design-stage evaluation framework in the paper.",
             tags$br(),tags$br(),
             "Based on the illustrated example in the paper, with a PPV of 36%, out of a patient sub-population of 100 patients, 36 would be identified to experience an unplanned admission or incident of interest. To avoid one adverse event, we would need to treat 18 patients (NNT). So, out of 36 patients identified, the intervention would prevent two adverse events from happening.",
             tags$br(),tags$br(),
