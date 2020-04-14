@@ -1,5 +1,6 @@
 library(shiny)
 library(tidyverse)
+library(patchwork)
 
 options(scipen = 999)
 
@@ -45,7 +46,7 @@ shinyServer(function(input, output) {
         p50 <- round(round(quantile(df$s_i, 0.5), 2))
         p90 <- round(round(quantile(df$s_i, 0.9), 2))
         
-        ggplot() + 
+        pointplot <- ggplot() + 
         geom_point(aes(x = sum(nntlower+nntupper)/2, y = (sum(ppvlower+ppvupper)/2)/100),
                    size = 33,
                    colour = "white",
@@ -70,6 +71,21 @@ shinyServer(function(input, output) {
         scale_y_continuous(limit = c(0,1),
                            labels = scales::percent_format(accuracy = 1)) +
         labs(x = "NNT", y = "PPV", title = "Maximum Cost of Intervention for Cost-Savings")
+        
+        cumhist <- 
+            ggplot(NULL,aes(s_i)) + 
+            geom_histogram(aes(y=cumsum(..count..)), colour = "black", alpha = 0) +
+            # stat_bin(aes(y=cumsum(..count..)),geom="line", color="red", size = 2) +
+            labs(x = "Cost of Intervention (£)",
+                 y = "Cumulative Distribution From Iterations")
+        
+        basichist <- 
+            ggplot(df, aes(x=s_i)) +
+            geom_histogram(colour = "black", alpha = 0) +
+            labs(y = "Draws Count",
+                 x = "Cost of Intervention (£)")
+        
+        pointplot / (basichist | cumhist )
         
     }
     

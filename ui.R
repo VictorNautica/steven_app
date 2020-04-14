@@ -41,7 +41,7 @@ shinyUI(
 
         # Show a plot
         mainPanel(
-            plotOutput("myplot")
+            plotOutput("myplot", height = "800")
         )
     )
 ))
