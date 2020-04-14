@@ -9,10 +9,7 @@ shinyServer(function(input, output) {
     output$myplot <- renderPlot({
         
 
-    this_shiny_ggplot_function(nntlower = input$nnt_lower, 
-                               nntupper = input$nnt_upper, 
-                               ppvlower = input$ppv_lower, 
-                               ppvupper = input$ppv_upper)
+    this_shiny_ggplot_function()
 
     })
     
@@ -23,17 +20,46 @@ shinyServer(function(input, output) {
     ## Simulations ####
     
 
-    this_shiny_ggplot_function <- function(nntlower, nntupper, ppvlower, ppvupper) {
+    this_shiny_ggplot_function <- function() {
         
         nsims <- 1000
         
+        ppvlower <- reactive({
+            req(input$ppv_lower)
+            input$ppv_lower
+        })
+        
+        ppvupper <- reactive({
+            req(input$ppv_upper)
+            input$ppv_upper
+        })
+        
+        nntlower <- reactive({
+            req(input$nnt_lower)
+            input$nnt_lower
+        })
+        
+        nntupper <- reactive({
+            req(input$nnt_upper)
+            input$nnt_upper
+        })
+        
+        costlower <- reactive({
+            req(input$cost_lower)
+            input$cost_lower
+        })
+        
+        costupper <- reactive({
+            req(input$cost_upper)
+            input$cost_upper
+        })
         
         s_ppv <-
-            replicate(nsims, runif(1, input$ppv_lower / 100, input$ppv_upper / 100))
+            replicate(nsims, runif(1, ppvlower() / 100, ppvupper() / 100))
         s_nnt <-
-            replicate(nsims, runif(1, input$nnt_lower, input$nnt_upper))
+            replicate(nsims, runif(1, nntlower(), nntupper()))
         s_a <-
-            replicate(nsims, runif(1, input$cost_lower, input$cost_upper))
+            replicate(nsims, runif(1, costlower(), costupper()))
         s_i <- (s_a * s_ppv) / s_nnt
         
         
@@ -42,28 +68,28 @@ shinyServer(function(input, output) {
                      s_a = s_a, 
                      s_i = s_i)
         
-        p10 <- round(round(quantile(df$s_i, 0.1), 2))
-        p50 <- round(round(quantile(df$s_i, 0.5), 2))
-        p90 <- round(round(quantile(df$s_i, 0.9), 2))
+        p10 <- round(quantile(df$s_i, 0.1), 2)
+        p50 <- round(quantile(df$s_i, 0.5), 2)
+        p90 <- round(quantile(df$s_i, 0.9), 2)
         
         pointplot <- ggplot() + 
-        geom_point(aes(x = sum(nntlower+nntupper)/2, y = (sum(ppvlower+ppvupper)/2)/100),
+        geom_point(aes(x = sum(nntlower()+nntupper())/2, y = (sum(ppvlower()+ppvupper())/2)/100),
                    size = 33,
                    colour = "white",
                    alpha = 0.5) +
         geom_text(aes(
-            x = sum(nntlower+nntupper)/2,
-            y = ((sum(ppvlower+ppvupper)/2)/100),
+            x = sum(nntlower()+nntupper())/2,
+            y = ((sum(ppvlower()+ppvupper())/2)/100),
             label = paste0("£",p50)),
             size = 5) +
         geom_text(aes(
-            x = sum(nntlower+nntupper)/2,
-            y = ((sum(ppvlower+ppvupper)/2)/100)+0.05,
+            x = sum(nntlower()+nntupper())/2,
+            y = ((sum(ppvlower()+ppvupper())/2)/100)+0.05,
             label = paste0("(£",p10,")")),
             size = 3.5) +
         geom_text(aes(
-            x = sum(nntlower+nntupper)/2,
-            y = ((sum(ppvlower+ppvupper)/2)/100)-0.05,
+            x = sum(nntlower()+nntupper())/2,
+            y = ((sum(ppvlower()+ppvupper())/2)/100)-0.05,
             label = paste0("(£",p90,")")),
             size = 3.5) +
         scale_x_log10(limits = c(1, 1000),
