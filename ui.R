@@ -31,7 +31,7 @@ shinyUI(
             tags$br(),tags$br(),
             "Thus, based on an average cost for an intervention, in order for cost-savings to be possible, the maximum cost of the upstream intervention is: A * PPV/NNT.",
             tags$br(),tags$br(),
-            "To incorporate uncertainity, we allow you to select minimum and maximum parameters for a uniform distribution for the three variables. Each number between these two parameters has an equal chance of being selected. This example uses Monte Carlo simulation over 1000 iterations.",
+            "To incorporate uncertainity, we allow you to select minimum and maximum parameters for a uniform distribution for the three variables. Each number between these two parameters has an equal chance of being selected. These modelled scenarios use Monte Carlo simulation over 1000 iterations.",
             tags$br(),tags$br(),
             "Figures in brackets represent lower and upper 10% quantile intervals (80% interval around the median) over the 1000 iterations.",
             tags$br(),tags$br(),
